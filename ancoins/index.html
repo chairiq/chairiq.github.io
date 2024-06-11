@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Ancoins Systems</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+</head>
+
+<style>
+	.pred-container {
+		margin-bottom: 20px;
+	}
+
+	.pred-container > div {
+		display: inline-block;
+		margin-right: 20px;
+		vertical-align: top;
+	}
+
+	.row2 {
+		display: table-row;
+	}
+	.cell2 {
+		display: table-cell;
+		padding-right: 20px;
+	}
+
+	#file-container {
+		margin-bottom: 20px;
+	}
+	#status{
+		height: 40px;
+	}
+	.spaccing-0{
+		padding: 0;
+		margin: 0;
+	}
+
+</style>
+
+<body>
+	<div class="tfjs-example-container pl-4 pr-4">
+		<section class='title-area'>
+			<h2>Ancoins: Ancient coins identification systems</h2>
+			<p>This is an ancient coins recognition system, based on deep convolutional neural networks (Transfer learning approach) trained with the <i>AnCois-12</i> dataset.		
+			<button type="button" class="btn btn-link" id="classesBTN" data-toggle="modal" data-target="#exampleModalLong" >
+			  Ancoins dataset categories
+			</button></p>
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLongTitle">Ancoins dataset categories</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body" id="modal-body">
+			        
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+		</section>
+		<div id="myCollapsible" class="collapse">
+			<section>
+				<h5 id='images-head' class='section-head'><u>Test the system.</u></h5>
+				<a class="btn btn-secondary btn-block text-left" data-toggle="collapse" href="#collapseExample0" aria-controls="collapseExample0">
+					Sample images:
+				</a><br/>
+				<div class="container collapse" id="collapseExample0">
+					<div class="row spaccing-0">
+						<div class="col spaccing-0">
+							<img style="" id="img_pred1" src="test_images2/abdera_griffin.png" width=80 height=80 />
+							<figcaption>Abdera Griffin</figcaption>
+						</div>
+						<!--<div class="col spaccing-0">
+							<img style="" id="img_pred2" src="test_images/aesillas.jpg" width=80 height=80 />
+							<figcaption>Aesillas</figcaption>
+						</div>
+						<div class="col spaccing-0">
+							<img style="" id="img_pred3" src="test_images/ainos.jpg" width=80 height=80 />
+							<figcaption>Ainos</figcaption>
+						</div>-->
+						<div class="col spaccing-0">
+							<img style="" id="img_pred4" src="test_images2/alexander.png" width=80 height=80 />
+							<figcaption>Alexander</figcaption>
+						</div>
+						<!--<div class="col pspaccing-0">
+							<img style="" id="img_pred5" src="test_images/apollonia.jpg" width=80 height=80 />
+							<figcaption>Apollonia</figcaption>
+						</div>-->
+						<div class="col spaccing-0">
+							<img style="" id="img_pred6" src="test_images2/chersonese.png" width=80 height=80 />
+							<figcaption>Chersonese</figcaption>
+						</div>
+						<div class="col spaccing-0">
+							<img style="" id="img_pred7" src="test_images2/istrus.png" width=80 height=80 />
+							<figcaption>Istrus</figcaption>
+						</div>
+						<!--<div class="col spaccing-0">
+							<img style="" id="img_pred8" src="test_images/lysimachos.jpg" width=80 height=80 />
+							<figcaption>Lysimachos</figcaption>
+						</div>
+						<div class="col spaccing-0">
+							<img style="" id="img_pred9" src="test_images/macedonian.jpg" width=80 height=80 />
+							<figcaption>Macedonian</figcaption>
+						</div>-->
+						<div class="col spaccing-0">
+							<img style="" id="img_pred10" src="test_images2/maroneia_horse.png" width=80 height=80 />
+							<figcaption>Maroneia Horse</figcaption>
+						</div>
+						<!--<div class="col spaccing-0">
+							<img style="" id="img_pred11" src="test_images/new_style_athenian.jpg" width=80 height=80 />
+							<figcaption>New Style Athenian</figcaption>
+						</div>
+						<div class="col spaccing-0">
+							<img style="" id="img_pred12" src="test_images/thasos_satyr.jpg" width=80 height=80 />
+							<figcaption>Thasos Satyr</figcaption>
+						</div>-->
+					</div>
+					<div><i>With permission of <a href="http://wildwinds.com" target="_blank">wildwinds.com</a></i></div>
+				</div>
+
+				<a class="btn btn-secondary btn-block text-left" data-toggle="collapse" href="#file-container" aria-controls="file-container">Upload new image (for smartphones, capture a photo and upload it):
+				</a><br/>
+				<div class="container collapse" id="file-container" style="display: none">
+					<input type="file" id="files" class="btn btn-dark btn-block" name="files[]" multiple />
+				</div>
+			</section>
+		</div>
+		<section>
+			<h5 id = 'system-status-head'><u>System status:</u></h5>
+			<div id="status" class="btn-warning"></div>
+		</section>
+		<div id="myCollapsible2" class="collapse">		
+			<section>
+				<h5 id = 'output-head' class='section-head'><u>Model Output:</u></h5>
+				<div id = "predictions"></div>
+			</section>
+		</div>
+		<!--<section>
+			<br/><br/>
+			<p>Please cite this work as:<br>
+				Chairi Kiourt, George Pavlidis and Stella Markantonatou, <b>Deep learning approaches in food recognition</b>, in the Book <i>MACHINE LEARNING PARADIGMS - Advances in Theory and Applications of Deep Learning</i>, Springer.
+			</p>
+		</section>-->
+	</div>
+</body>
+<script src="ancoins12_classes.js"></script>
+<script src="index.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</html>
+<script type="text/javascript">
+	
+
+
+
+</script>
+
